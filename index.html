@@ -7,27 +7,40 @@
 </head>
 <body>
     <h1>Simple Form</h1>
-    <form id="myForm">
+    <form id="myForm" action="https://api.github.com/repos/sumit9873788/sumit9873788.github.io/dispatches" method="POST" onsubmit="submitForm(event)">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br><br>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br><br>
-        <input type="button" value="Submit" onclick="submitForm()">
+        <input type="submit" value="Submit">
     </form>
     <script>
-        function submitForm() {
+        function submitForm(event) {
+            event.preventDefault();
             const form = document.getElementById('myForm');
-            const data = new FormData(form);
-            const name = data.get('name');
-            const email = data.get('email');
-            const csvContent = `data:text/csv;charset=utf-8,Name,Email\n${name},${email}\n`;
+            const formData = new FormData(form);
 
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', 'data.csv');
-            document.body.appendChild(link);
-            link.click();
+            fetch('https://api.github.com/repos/sumit9873788/sumit9873788.github.io/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': 'token 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',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    event_type: 'submit_form',
+                    client_payload: {
+                        name: formData.get('name'),
+                        email: formData.get('email')
+                    }
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Form submitted successfully');
+                } else {
+                    alert('Failed to submit form');
+                }
+            });
         }
     </script>
 </body>
