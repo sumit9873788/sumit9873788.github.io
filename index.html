@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Data</title>
+    <title>Simple Form</title>
 </head>
 <body>
-    <h1>Submit Your Test Data</h1>
-    <form action="/submit" method="post">
+    <h1>Simple Form</h1>
+    <form id="myForm">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
+        <input type="text" id="name" name="name" required><br><br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <button type="submit">Submit</button>
+        <input type="email" id="email" name="email" required><br><br>
+        <input type="button" value="Submit" onclick="submitForm()">
     </form>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('myForm');
+            const data = new FormData(form);
+            const name = data.get('name');
+            const email = data.get('email');
+            const csvContent = `data:text/csv;charset=utf-8,Name,Email\n${name},${email}\n`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'data.csv');
+            document.body.appendChild(link);
+            link.click();
+        }
+    </script>
 </body>
 </html>
