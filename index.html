@@ -6,14 +6,22 @@
 <body>
 	<div class="container">
 		<form method="post" action="https://script.google.com/macros/s/AKfycbyq4i4zPVn-tlQC1-i110Tp8gmIjaw4ddk8gzP_W9MaW9IU8LqTzBcItMB24s_hkxrbXw/exec" name="contact-form">
-			<h4>Contact Us</h4>
-			<input type="text" name="your-name" placeholder="Name">
-			<input type="text" name="your-number" placeholder="Number">
-			<input type="email" name="your-email" placeholder="Email">
-			<textarea name="message" rows="7" placeholder="Your Message"></textarea>
+			<h4>Sumit Expense</h4>
+			<input type="text" name="Date" id="dateInput" placeholder="Date">
+			<input type="text" name="Amount" placeholder="Amount">
+			<textarea name="Note" rows="7" placeholder="Note"></textarea>
 			<input type="submit" value="Submit" id="submit">
 		</form>
 	</div>
+
+	<script>
+		// JavaScript to auto-fill the date input with current date and time
+		window.onload = function() {
+			var dateInput = document.getElementById("dateInput");
+			var currentDate = new Date().toLocaleString(); // Gets the current date and time
+			dateInput.value = currentDate; // Sets the value of the input field
+		};
+	</script>
 
 	<script src="Google Sheet.js"></script>
 </body>
